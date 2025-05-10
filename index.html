@@ -57,27 +57,15 @@
             object-fit: cover;
         }
 
-        .label {
+        /* The Slider Line */
+        .slider-line {
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 18px;
-            font-weight: bold;
-            color: #fff;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 5px 10px;
-            z-index: 20;
-            pointer-events: none; /* Prevent the labels from interfering with slider interaction */
-            transition: all 0.1s ease;
-        }
-
-        .before-label {
-            left: 10px;
-        }
-
-        .after-label {
-            left: 100%; /* Position after the slider circle */
-            transform: translateX(-100%) translateY(-50%); /* Adjust position to the right of the circle */
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 1px; /* Thin line */
+            background-color: #fff;
+            z-index: 10;
         }
 
         /* The Slider - Circle with arrows */
@@ -85,7 +73,7 @@
             position: absolute;
             top: 50%; /* Vertically center the slider */
             left: 50%; /* Initially position the slider at the center horizontally */
-            z-index: 10;
+            z-index: 20;
             width: 40px; /* Circle width */
             height: 40px; /* Circle height */
             background: white;
@@ -102,10 +90,6 @@
             font-size: 18px;
             color: black;
             background-color: transparent;
-        }
-
-        .slider-container .after {
-            clip-path: inset(0 0 0 50%); /* Initially hides the right half of the image */
         }
 
         footer {
@@ -130,10 +114,9 @@
         <!-- Portfolio Item 1 -->
         <div class="portfolio-item">
             <div class="slider-container">
-                <span class="label before-label">Before</span>
                 <img src="images/retouching1_before.jpg" alt="Before Image 1" class="before">
                 <img src="images/retouching1_after.jpg" alt="After Image 1" class="after">
-                <span class="label after-label">After</span>
+                <div class="slider-line"></div> <!-- Thin dividing line -->
                 <div class="slider">
                     <span class="arrow">&lt;</span> <!-- Left arrow -->
                     <span class="arrow">&gt;</span> <!-- Right arrow -->
@@ -144,10 +127,9 @@
         <!-- Portfolio Item 2 -->
         <div class="portfolio-item">
             <div class="slider-container">
-                <span class="label before-label">Before</span>
                 <img src="images/retouching2_before.jpg" alt="Before Image 2" class="before">
                 <img src="images/retouching2_after.jpg" alt="After Image 2" class="after">
-                <span class="label after-label">After</span>
+                <div class="slider-line"></div> <!-- Thin dividing line -->
                 <div class="slider">
                     <span class="arrow">&lt;</span> <!-- Left arrow -->
                     <span class="arrow">&gt;</span> <!-- Right arrow -->
@@ -158,10 +140,9 @@
         <!-- Portfolio Item 3 -->
         <div class="portfolio-item">
             <div class="slider-container">
-                <span class="label before-label">Before</span>
                 <img src="images/retouching3_before.jpg" alt="Before Image 3" class="before">
                 <img src="images/retouching3_after.jpg" alt="After Image 3" class="after">
-                <span class="label after-label">After</span>
+                <div class="slider-line"></div> <!-- Thin dividing line -->
                 <div class="slider">
                     <span class="arrow">&lt;</span> <!-- Left arrow -->
                     <span class="arrow">&gt;</span> <!-- Right arrow -->
@@ -172,10 +153,9 @@
         <!-- Portfolio Item 4 -->
         <div class="portfolio-item">
             <div class="slider-container">
-                <span class="label before-label">Before</span>
                 <img src="images/retouching4_before.jpg" alt="Before Image 4" class="before">
                 <img src="images/retouching4_after.jpg" alt="After Image 4" class="after">
-                <span class="label after-label">After</span>
+                <div class="slider-line"></div> <!-- Thin dividing line -->
                 <div class="slider">
                     <span class="arrow">&lt;</span> <!-- Left arrow -->
                     <span class="arrow">&gt;</span> <!-- Right arrow -->
@@ -186,10 +166,9 @@
         <!-- Portfolio Item 5 -->
         <div class="portfolio-item">
             <div class="slider-container">
-                <span class="label before-label">Before</span>
                 <img src="images/retouching5_before.jpg" alt="Before Image 5" class="before">
                 <img src="images/retouching5_after.jpg" alt="After Image 5" class="after">
-                <span class="label after-label">After</span>
+                <div class="slider-line"></div> <!-- Thin dividing line -->
                 <div class="slider">
                     <span class="arrow">&lt;</span> <!-- Left arrow -->
                     <span class="arrow">&gt;</span> <!-- Right arrow -->
@@ -200,10 +179,9 @@
         <!-- Portfolio Item 6 -->
         <div class="portfolio-item">
             <div class="slider-container">
-                <span class="label before-label">Before</span>
                 <img src="images/retouching6_before.jpg" alt="Before Image 6" class="before">
                 <img src="images/retouching6_after.jpg" alt="After Image 6" class="after">
-                <span class="label after-label">After</span>
+                <div class="slider-line"></div> <!-- Thin dividing line -->
                 <div class="slider">
                     <span class="arrow">&lt;</span> <!-- Left arrow -->
                     <span class="arrow">&gt;</span> <!-- Right arrow -->
@@ -220,18 +198,16 @@
 <script>
     const sliders = document.querySelectorAll('.slider');
     const containers = document.querySelectorAll('.slider-container');
-    const beforeLabels = document.querySelectorAll('.before-label');
-    const afterLabels = document.querySelectorAll('.after-label');
+    const lines = document.querySelectorAll('.slider-line');
 
     sliders.forEach((slider, index) => {
         const container = containers[index];
         const beforeImage = container.querySelector('.before');
         const afterImage = container.querySelector('.after');
-        const beforeLabel = beforeLabels[index];
-        const afterLabel = afterLabels[index];
+        const line = lines[index];
         let isDragging = false;
 
-        // Function to update the position of the slider and adjust the "after" image and labels
+        // Function to update the position of the slider and adjust the "after" image and line
         const updateSlider = (e) => {
             const rect = container.getBoundingClientRect();
             const offsetX = e.clientX - rect.left;
@@ -241,9 +217,8 @@
             // Adjust the clip-path of the "after" image
             afterImage.style.clipPath = `inset(0 0 0 ${width}px)`; // Clip "after" image to reveal it
 
-            // Update the label positions
-            beforeLabel.style.left = `${Math.min(width - 10, 10)}px`;
-            afterLabel.style.left = `${Math.max(width + 20, 10)}px`; // Place "After" label to the right of the slider
+            // Adjust the line position
+            line.style.left = `${width}px`; // Move the dividing line with the slider
         };
 
         slider.addEventListener('mousedown', (e) => {
@@ -266,8 +241,7 @@
         const initPosition = container.offsetWidth / 2;
         slider.style.left = `${initPosition}px`;
         afterImage.style.clipPath = `inset(0 0 0 ${initPosition}px)`;
-        beforeLabel.style.left = `${Math.min(initPosition - 10, 10)}px`;
-        afterLabel.style.left = `${Math.max(initPosition + 20, 10)}px`;
+        line.style.left = `${initPosition}px`;
     });
 </script>
 
