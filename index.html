@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retouching Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 400px; /* Adjust the height as needed */
+            overflow: hidden;
+        }
+
+        .slider-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* The Slider - Circle with arrows */
+        .slider {
+            position: absolute;
+            top: 50%; /* Vertically center the slider */
+            left: 50%; /* Initially position the slider at the center horizontally */
+            z-index: 10;
+            width: 40px; /* Circle width */
+            height: 40px; /* Circle height */
+            background: white;
+            cursor: ew-resize;
+            border-radius: 50%; /* Circle shape */
+            border: 2px solid #333; /* Circle border */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: translateY(-50%); /* Vertically center the circle */
+        }
+
+        .slider .arrow {
+            font-size: 18px;
+            color: black;
+            background-color: transparent;
+        }
+
+        .slider-container .after {
+            clip-path: inset(0 0 0 50%); /* Initially hides the right half of the image */
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Retouching Portfolio</h1>
+</header>
+
+<div class="container">
+    <div class="gallery">
+        <div class="portfolio-item">
+            <!-- Before and After Image Slider -->
+            <div class="slider-container">
+                <img src="/images/retouching1_before.jpg" alt="Before Image 1" class="before">
+                <img src="/images/retouching1_after.jpg" alt="After Image 1" class="after">
+                <div class="slider">
+                    <span class="arrow">&lt;</span> <!-- Left arrow -->
+                    <span class="arrow">&gt;</span> <!-- Right arrow -->
+                </div>
+            </div>
+        </div>
+
+        <div class="portfolio-item">
+            <!-- Before and After Image Slider -->
+            <div class="slider-container">
+                <img src="/images/retouching2_before.jpg" alt="Before Image 1" class="before">
+                <img src="/images/retouching2_after.jpg" alt="After Image 1" class="after">
+                <div class="slider">
+                    <span class="arrow">&lt;</span> <!-- Left arrow -->
+                    <span class="arrow">&gt;</span> <!-- Right arrow -->
+                </div>
+            </div>
+        </div>
+
+        <div class="portfolio-item">
+            <!-- Before and After Image Slider -->
+            <div class="slider-container">
+                <img src="/images/retouching3_before.jpg" alt="Before Image 1" class="before">
+                <img src="/images/retouching3_after.jpg" alt="After Image 1" class="after">
+                <div class="slider">
+                    <span class="arrow">&lt;</span> <!-- Left arrow -->
+                    <span class="arrow">&gt;</span> <!-- Right arrow -->
+                </div>
+            </div>
+        </div>
+
+        <div class="portfolio-item">
+            <!-- Before and After Image Slider -->
+            <div class="slider-container">
+                <img src="/images/retouching4_before.jpg" alt="Before Image 1" class="before">
+                <img src="/images/retouching4_after.jpg" alt="After Image 1" class="after">
+                <div class="slider">
+                    <span class="arrow">&lt;</span> <!-- Left arrow -->
+                    <span class="arrow">&gt;</span> <!-- Right arrow -->
+                </div>
+            </div>
+        </div>
+      
+    
+        <div class="portfolio-item">
+            <!-- Before and After Image Slider -->
+            <div class="slider-container">
+                <img src="/images/retouching5_before.jpg" alt="Before Image 1" class="before">
+                <img src="/images/retouching5_after.jpg" alt="After Image 1" class="after">
+                <div class="slider">
+                    <span class="arrow">&lt;</span> <!-- Left arrow -->
+                    <span class="arrow">&gt;</span> <!-- Right arrow -->
+                </div>
+            </div>
+        </div>
+      
+    
+        <div class="portfolio-item">
+            <!-- Before and After Image Slider -->
+            <div class="slider-container">
+                <img src="/images/retouching6_before.jpg" alt="Before Image 1" class="before">
+                <img src="/images/retouching6_after.jpg" alt="After Image 1" class="after">
+                <div class="slider">
+                    <span class="arrow">&lt;</span> <!-- Left arrow -->
+                    <span class="arrow">&gt;</span> <!-- Right arrow -->
+                </div>
+            </div>
+        </div>
+      </div>
+</div>
+
+<footer>
+    <p>Contact me at <a href="mailto:your-email@example.com" style="color: white;">your-email@example.com</a></p>
+</footer>
+
+<script>
+    const sliders = document.querySelectorAll('.slider');
+    const containers = document.querySelectorAll('.slider-container');
+
+    sliders.forEach((slider, index) => {
+        const container = containers[index];
+        const beforeImage = container.querySelector('.before');
+        const afterImage = container.querySelector('.after');
+        let isDragging = false;
+
+        // Function to update the position of the slider and adjust the "after" image
+        const updateSlider = (e) => {
+            const rect = container.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const width = Math.min(Math.max(offsetX, 0), rect.width); // Constrain within container width
+            slider.style.left = `${width}px`;
+
+            // Adjust the clip-path of the "after" image
+            afterImage.style.clipPath = `inset(0 0 0 ${width}px)`; // Clip "after" image to reveal it
+        };
+
+        slider.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            document.body.style.cursor = 'ew-resize'; // Change cursor to indicate drag
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                updateSlider(e);
+            }
+        });
+
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+            document.body.style.cursor = 'default'; // Reset cursor
+        });
+
+        // Initialize the position of the slider at the center
+        const initPosition = container.offsetWidth / 2;
+        slider.style.left = `${initPosition}px`;
+        afterImage.style.clipPath = `inset(0 0 0 ${initPosition}px)`;
+    });
+</script>
+
+</body>
+</html>
