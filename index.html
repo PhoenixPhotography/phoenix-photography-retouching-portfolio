@@ -76,7 +76,8 @@
         }
 
         .after-label {
-            right: 10px;
+            left: 100%; /* Position after the slider circle */
+            transform: translateX(-100%) translateY(-50%); /* Adjust position to the right of the circle */
         }
 
         /* The Slider - Circle with arrows */
@@ -242,7 +243,7 @@
 
             // Update the label positions
             beforeLabel.style.left = `${Math.min(width - 10, 10)}px`;
-            afterLabel.style.right = `${Math.max(rect.width - width - 10, 10)}px`;
+            afterLabel.style.left = `${Math.max(width + 20, 10)}px`; // Place "After" label to the right of the slider
         };
 
         slider.addEventListener('mousedown', (e) => {
@@ -266,7 +267,7 @@
         slider.style.left = `${initPosition}px`;
         afterImage.style.clipPath = `inset(0 0 0 ${initPosition}px)`;
         beforeLabel.style.left = `${Math.min(initPosition - 10, 10)}px`;
-        afterLabel.style.right = `${Math.max(container.offsetWidth - initPosition - 10, 10)}px`;
+        afterLabel.style.left = `${Math.max(initPosition + 20, 10)}px`;
     });
 </script>
 
