@@ -67,6 +67,8 @@
             background-color: rgba(0, 0, 0, 0.5);
             padding: 5px 10px;
             z-index: 20;
+            pointer-events: none; /* Prevent the labels from interfering with slider interaction */
+            transition: all 0.1s ease;
         }
 
         .before-label {
@@ -138,75 +140,7 @@
             </div>
         </div>
 
-        <div class="portfolio-item">
-            <!-- Before and After Image Slider -->
-            <div class="slider-container">
-                <span class="label before-label">Before</span>
-                <img src="images/retouching2_before.jpg" alt="Before Image 2" class="before">
-                <img src="images/retouching2_after.jpg" alt="After Image 2" class="after">
-                <span class="label after-label">After</span>
-                <div class="slider">
-                    <span class="arrow">&lt;</span> <!-- Left arrow -->
-                    <span class="arrow">&gt;</span> <!-- Right arrow -->
-                </div>
-            </div>
-        </div>
-
-        <div class="portfolio-item">
-            <!-- Before and After Image Slider -->
-            <div class="slider-container">
-                <span class="label before-label">Before</span>
-                <img src="images/retouching3_before.jpg" alt="Before Image 3" class="before">
-                <img src="images/retouching3_after.jpg" alt="After Image 3" class="after">
-                <span class="label after-label">After</span>
-                <div class="slider">
-                    <span class="arrow">&lt;</span> <!-- Left arrow -->
-                    <span class="arrow">&gt;</span> <!-- Right arrow -->
-                </div>
-            </div>
-        </div>
-
-        <div class="portfolio-item">
-            <!-- Before and After Image Slider -->
-            <div class="slider-container">
-                <span class="label before-label">Before</span>
-                <img src="images/retouching4_before.jpg" alt="Before Image 4" class="before">
-                <img src="images/retouching4_after.jpg" alt="After Image 4" class="after">
-                <span class="label after-label">After</span>
-                <div class="slider">
-                    <span class="arrow">&lt;</span> <!-- Left arrow -->
-                    <span class="arrow">&gt;</span> <!-- Right arrow -->
-                </div>
-            </div>
-        </div>
-      
-        <div class="portfolio-item">
-            <!-- Before and After Image Slider -->
-            <div class="slider-container">
-                <span class="label before-label">Before</span>
-                <img src="images/retouching5_before.jpg" alt="Before Image 5" class="before">
-                <img src="images/retouching5_after.jpg" alt="After Image 5" class="after">
-                <span class="label after-label">After</span>
-                <div class="slider">
-                    <span class="arrow">&lt;</span> <!-- Left arrow -->
-                    <span class="arrow">&gt;</span> <!-- Right arrow -->
-                </div>
-            </div>
-        </div>
-      
-        <div class="portfolio-item">
-            <!-- Before and After Image Slider -->
-            <div class="slider-container">
-                <span class="label before-label">Before</span>
-                <img src="images/retouching6_before.jpg" alt="Before Image 6" class="before">
-                <img src="images/retouching6_after.jpg" alt="After Image 6" class="after">
-                <span class="label after-label">After</span>
-                <div class="slider">
-                    <span class="arrow">&lt;</span> <!-- Left arrow -->
-                    <span class="arrow">&gt;</span> <!-- Right arrow -->
-                </div>
-            </div>
-        </div>
+        <!-- Repeat for other images as necessary -->
     </div>
 </div>
 
@@ -217,14 +151,18 @@
 <script>
     const sliders = document.querySelectorAll('.slider');
     const containers = document.querySelectorAll('.slider-container');
+    const beforeLabels = document.querySelectorAll('.before-label');
+    const afterLabels = document.querySelectorAll('.after-label');
 
     sliders.forEach((slider, index) => {
         const container = containers[index];
         const beforeImage = container.querySelector('.before');
         const afterImage = container.querySelector('.after');
+        const beforeLabel = beforeLabels[index];
+        const afterLabel = afterLabels[index];
         let isDragging = false;
 
-        // Function to update the position of the slider and adjust the "after" image
+        // Function to update the position of the slider and adjust the "after" image and labels
         const updateSlider = (e) => {
             const rect = container.getBoundingClientRect();
             const offsetX = e.clientX - rect.left;
@@ -233,6 +171,10 @@
 
             // Adjust the clip-path of the "after" image
             afterImage.style.clipPath = `inset(0 0 0 ${width}px)`; // Clip "after" image to reveal it
+
+            // Update the label positions
+            beforeLabel.style.left = `${Math.min(width - 10, 10)}px`;
+            afterLabel.style.right = `${Math.max(rect.width - width - 10, 10)}px`;
         };
 
         slider.addEventListener('mousedown', (e) => {
@@ -255,6 +197,8 @@
         const initPosition = container.offsetWidth / 2;
         slider.style.left = `${initPosition}px`;
         afterImage.style.clipPath = `inset(0 0 0 ${initPosition}px)`;
+        beforeLabel.style.left = `${Math.min(initPosition - 10, 10)}px`;
+        afterLabel.style.right = `${Math.max(container.offsetWidth - initPosition - 10, 10)}px`;
     });
 </script>
 
